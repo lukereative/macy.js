@@ -70,9 +70,7 @@ export function shuffle (ctx, $eles, refresh = false, markasComplete = true) {
       }
     });
 
-    ele.style.position = 'absolute';
-    ele.style.top = `${ctx.rows[smallest]}px`;
-    ele.style.left = `${ctx.cols[smallest]}`;
+    ele.style.transform = `translate(${ctx.cols[smallest]}, ${ctx.rows[smallest]}px)`;
     ctx.rows[smallest] += !isNaN(eleHeight) ? eleHeight + margin : 0;
 
     if (markasComplete) {
@@ -109,9 +107,8 @@ export function sort (ctx, $eles, refresh = false, markasComplete = true) {
     eleHeight = parseInt(ele.offsetHeight, 10);
 
     if (isNaN(eleHeight)) return;
-    ele.style.position = 'absolute';
-    ele.style.top = `${ctx.rows[ctx.lastcol]}px`;
-    ele.style.left = `${ctx.cols[ctx.lastcol]}`;
+    console.log(ctx.cols[ctx.lastcol]);
+    ele.style.transform = `translate(${ctx.cols[ctx.lastcol]}, ${ctx.rows[ctx.lastcol]}px)`;
     ctx.rows[ctx.lastcol] += !isNaN(eleHeight) ? eleHeight + margin : 0;
     ctx.lastcol += 1;
 

@@ -30,7 +30,8 @@ export function getCurrentMargin (options) {
 export function getWidths (options, marginsIncluded = true) {
   let noOfColumns = getCurrentColumns(options);
   let margins = getCurrentMargin(options).x;
-  let width = 100 / noOfColumns;
+  let width =  100 / noOfColumns;
+  width = Math.round(( width + Number.EPSILON) * 100) / 100;
 
   if (!marginsIncluded) {
     return width;
@@ -49,6 +50,7 @@ export function getWidths (options, marginsIncluded = true) {
   }
 
   margins = (noOfColumns - 1) * margins / noOfColumns;
+  margins =  Math.round((margins + Number.EPSILON) * 100) / 100;
 
   if (unit === '%') {
     return `${width - margins}%`;
@@ -86,10 +88,12 @@ export function getLeftPosition (ctx, col) {
 
   margin = (baseMargin - (noOfColumns - 1) * baseMargin / noOfColumns) * (col - 1);
   totalLeft += getWidths(ctx.options, false) * (col - 1);
+  totalLeft = ctx.container.offsetWidth * ( totalLeft / 100);
+  totalLeft =  Math.round((totalLeft + Number.EPSILON) * 100) / 100;
   if (unit === '%') {
     str = `${totalLeft + margin}%`;
   } else {
-    str = `calc(${totalLeft}% + ${margin}${unit})`;
+    str = `calc(${totalLeft}px + ${margin}${unit})`;
   }
 
   return str;
